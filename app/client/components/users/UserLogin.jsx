@@ -49,6 +49,11 @@ C.UserLogin = React.createClass({
             }
         });
     },
+
+    goToSignup() {
+      FlowRouter.go('Signup');
+    },
+
     render() {
         return (
             <div className="container">
@@ -62,6 +67,7 @@ C.UserLogin = React.createClass({
                             <C.FormInput hasError={!!this.state.errors.password} name="Password" type="password" label="Password" />
                             <input type="submit" className="btn btn-default"/>
                         </form>
+                            <input type="button" value="Signup" name="signup" onClick={this.goToSignup} className="btn btn-primary"/>
                     </div>
                 </div>
             </div>
