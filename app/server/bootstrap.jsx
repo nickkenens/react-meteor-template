@@ -4,6 +4,8 @@ Meteor.startup(() => {
         Accounts.createUser({
             email: "nick.kenens@gmail.com",
             password: "fake"
+        }, (err) => {
+          console.log(err);
         });
     }
 

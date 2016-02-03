@@ -11,23 +11,34 @@ C.UserSignup = React.createClass({
 
 	getInitialState() {
 		return {
-			errors: {}
+			errors: {},
+			email: '',
+			password: ''
 		}
+	},
+
+	onEmailChange(event) {
+
+		this.setState({email: event.target.value});
+		console.log(this.state.email);
+	},
+
+	onPassChange(event) {
+		this.setState({password: event.target.value});
+		console.log(this.state.password);
+
 	},
 
 	handleSignUp(event) {
 
 		event.preventDefault();
 
-		var useremail = $(event.target).find("[name=email]").val();
-		var userpassword = $(event.target).find("[name=password]").val();
-
 		var errors = {};
 
-		if (!email) {
+		if (this.state.email === "") {
 			errors.email = "Email Required";
 		}
-		if(!password) {
+		if(this.state.password === "") {
 			errors.password = "Password Required";
 		}
 
@@ -36,11 +47,13 @@ C.UserSignup = React.createClass({
 		})
 
 		Accounts.createUser({
-			email: useremail,
-			password: userpassword
+			email: this.state.email,
+			password: this.state.password
+		},(err) => {
+			console.log(err);
 		})
 
-		FlowRouter.go('Login');
+		FlowRouter.go('Home');
 	},
 	render() {
 
@@ -50,8 +63,8 @@ C.UserSignup = React.createClass({
 					<h1 className="text-center">Signup</h1>
 					<form onSubmit={this.handleSignUp}>
 						<C.AuthErrors errors={this.state.errors} />
-						<C.FormInput hasError={!!this.state.errors.email} name="Email" type="text" label="Email" />
-						<C.FormInput hasError={!!this.state.errors.password} name="Password" type="password" label="Password" />
+						<C.FormInput hasError={!!this.state.errors.email} onKeyUp={this.onEmailChange} value={this.state.email} name="Email" type="text" label="Email"/>
+						<C.FormInput hasError={!!this.state.errors.password} onKeyUp={this.onPassChange} value={this.state.password} name="Password" type="password" label="Password"/>
 						<input type="submit" className="btn btn-default"/>
 					</form>
 				</div>
